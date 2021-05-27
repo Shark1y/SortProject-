@@ -12,10 +12,6 @@
 //dividing the array into smaller, sorted ones 
 void merge(int array[], int first, int middle, int last){
 
-    int f;
-    int s;
-    int m;
-
     //stands for the last index of the number in the left part of the array 
     int number1 = middle - first + 1;
 
@@ -27,19 +23,19 @@ void merge(int array[], int first, int middle, int last){
     int rightPart[number2];
 
     //copying left array values to the temporary array
-    for (f = 0; f < number1; f++)
+    for (int f = 0; f < number1; f++)
         leftPart[f] = array[first + f];
 
     //copying right array values to the temporary array     
-    for (s = 0; s < number2; s++)
+    for (int s = 0; s < number2; s++)
         rightPart[s] = array[middle + 1 + s];
 
     // starting index of the first array 
-    int fa = 0;
+    int firstArray = 0;
     //starting index of the second array 
-    int sa = 0;
+    int secondArray = 0;
     //starting index of the merged array 
-    int ma = first;
+    int mergedArray = first;
 
     /*  while loop: merging the temporary arrays into one
         while current index of the first array is smaller than the last number of the left part and 
@@ -50,36 +46,37 @@ void merge(int array[], int first, int middle, int last){
         else if not, next number of the merged array is the current number from the right part array
         after every while loop iteration, increase the current index of the merged array 
     */ 
-    while (fa < number1 && sa < number2){
-        if(leftPart[fa] <= rightPart[sa]){
-            array[ma] = leftPart[fa];
-            fa++;
+    while (firstArray < number1 && secondArray < number2){
+        if(leftPart[firstArray] <= rightPart[secondArray]){
+            array[mergedArray] = leftPart[firstArray];
+            firstArray++;
         } else {
-            array[ma] = rightPart[sa];
-            sa++;
+            array[mergedArray] = rightPart[secondArray];
+            secondArray++;
         }
-        ma++;
+        mergedArray++;
     }
 
     // if any element in either left or right array left, copy them to the merged array
     //left part 
-    while (fa < number1){
-        array[ma] = leftPart[fa];
-        fa++;
-        ma++;
+    while (firstArray < number1){
+        array[mergedArray] = leftPart[firstArray];
+        firstArray++;
+        mergedArray++;
     }
 
     //right part 
-    while (sa < number2){
-        array[ma] = rightPart[sa];
-        sa++;
-        ma++;
+    while (secondArray < number2){
+        array[mergedArray] = rightPart[secondArray];
+        secondArray++;
+        mergedArray++;
     }
 }
 
 /*"array" stands for the array we are working with 
     "first" stands for the first element of the array 
     "last" stands for the last element of the array 
+    if the last element is larger than the first one, recursively sort the provided array 
 */
 void MergeSort(int array[], int first, int last){
     if (first < last){
@@ -95,35 +92,45 @@ void MergeSort(int array[], int first, int last){
 
 int main(int argc, char *argv[]){
 
-    //reading from a file
-    FILE* f = fopen (argv[1], "r");
-
-    //where to store the length of the array 
-    int length = 0;
-    //reading the length of the array 
-    fscanf (f, "%d", &length); 
-
-    //inputing values inside the array 
-    int temp;
-    int counter = 0;
-
-    int values[length];
-
-    while (!feof (f))
-    {  
-        fscanf (f, "%d", &temp);  
-        values[counter] = temp;   
-        counter++; 
-    }
-
-    fclose (f);
-
+     //starting the timer for the time consuming 
     clock_t begin = clock();
 
-    for (int i = 0; i < 1000; i++){
+    for (int i =0; i <1000; i++){
+
+        //reading from a file
+        FILE* f = fopen (argv[1], "r");
+
+        //where to store the length of the array 
+        int length = 0;
+        //reading the length of the array 
+        fscanf (f, "%d", &length); 
+
+        //inputing values inside the array 
+        int temp;
+
+        //counter is used to store the values one by one 
+        int counter = 0;
+
+        //initializing array for the values 
+        int values[length];
+
+        //input values untill we reach end of the file 
+        while (!feof (f))
+        {  
+            fscanf (f, "%d", &temp);  
+            values[counter] = temp;   
+            counter++; 
+        }
+
+        //closing the file we are working with 
+        fclose (f);
+
+        //call for sort function 
         MergeSort(values,values[0],length);
+
     }
     
+    //closing the timer for the time consuming 
     clock_t end = clock();
 
     printf("Spent: %f seconds\n", (double)(end - begin) / CLOCKS_PER_SEC);
