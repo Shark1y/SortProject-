@@ -64,3 +64,22 @@ Patience Sort 0-1024 values.
 
 Spent: 1.984666 seconds
 Patience Sort random values.
+
+
+Spent: 0.218997 seconds
+Merge Sort [1,2,3,4...512, 1024, 1023,...513] values.
+
+Spent: 4.917307 seconds
+Patience Sort [1,2,3,4...512, 1024, 1023,...513] values.
+
+Spent: 2.093366 seconds
+Quick Sort [1,2,3,4...512, 1024, 1023,...513] values.
+
+Spent: 0.217795 seconds
+Smooth [1,2,3,4...512, 1024, 1023,...513] values.
+
+Spent: 0.594416 seconds
+Tim Sort [1,2,3,4...512, 1024, 1023,...513] values.
+
+Spent: 2.975640 seconds
+Tree Sort [1,2,3,4...512, 1024, 1023,...513] values.
